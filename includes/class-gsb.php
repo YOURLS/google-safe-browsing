@@ -69,7 +69,7 @@ class ozh_yourls_GSB {
      * @return Request request object
      */
     private function request() {
-        $api_url = sprintf( 'https://sb-ssl.google.com/safebrowsing/api/lookup?client=%s&apikey=%s&appver=%s&pver=%s&url=%s',
+        $api_url = sprintf( 'https://sb-ssl.google.com/safebrowsing/api/lookup?client=%s&key=%s&appver=%s&pver=%s&url=%s',
             self::CLIENT,
             $this->api_key,
             self::APP_VER,

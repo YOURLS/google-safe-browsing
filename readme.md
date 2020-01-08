@@ -1,5 +1,9 @@
 Plugin for YOURLS 1.7+: Google Safe Browsing
 
+# Dude
+
+**This plugin uses Google's Safe Browsing API from 2017, version 3. As of writing, the V3 version of GSB has been deprecated. This plugin needs some good will and a pull request to be updated :)**
+
 # What for
 
 Check every new URL against Google's Safe Browsing Lookup service, reject those who are identified as malware or phishing

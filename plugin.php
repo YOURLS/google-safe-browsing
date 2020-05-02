@@ -33,7 +33,7 @@ function ozh_yourls_gsb_check_add( $false, $url ) {
 		return array(
 			'status' => 'fail',
 			'code'   => 'error:' . $desc,
-			'message' => 'This domain is blacklisted by Google Safe Browsing because of ' . $desc . ' suspicion. <a href="http://code.google.com/apis/safebrowsing/safebrowsing_faq.html#whyAdvisory">Read more</a>.',
+			'message' => 'This domain is blacklisted by Google Safe Browsing because of ' . $desc . ' suspicion. <a href="http://code.google.com/apis/safebrowsing/safebrowsing_faq.html#whyAdvisory" target="_blank">Read more</a>.',
 			'errorCode' => '403',
 		);
 	}

@@ -6,8 +6,8 @@
 
 class ozh_yourls_GSB {
     
-    const PROTOCOL_VER = '3.0';
-    const CLIENT       = 'yourls-plugin';
+    const PROTOCOL_VER = '4.0';
+    const CLIENT       = 'yourls-plugin-gsb';
     const APP_VER      = '1.0';
     
     private $url       = '';
@@ -42,14 +42,13 @@ class ozh_yourls_GSB {
         
         $request = $this->request();
         
-        // var_dump( $request );
-        
         switch( $request->status_code ) {
             case 200:
-                return array( true, $request->body );
-                
-            case 204:
-                return array( false, null );
+                $response = json_decode($request->body);
+                $blacklisted = true;
+                if (!isset($response->matches))
+                    $blacklisted = false;
+                return array($blacklisted, ($blacklisted ? $response->matches[0]->threatType : null));
         
             case 400:
                 return array( false, 'Could not check Google Safe Browsing: Bad Request' );
@@ -69,19 +68,38 @@ class ozh_yourls_GSB {
      * @return Request request object
      */
     private function request() {
-        $api_url = sprintf( 'https://sb-ssl.google.com/safebrowsing/api/lookup?client=%s&key=%s&appver=%s&pver=%s&url=%s',
-            self::CLIENT,
-            $this->api_key,
-            self::APP_VER,
-            self::PROTOCOL_VER,
-            $this->url
+        $api_url = sprintf( 'https://safebrowsing.googleapis.com/v4/threatMatches:find?key=%s',
+            $this->api_key
+        );
+
+        // Request headers
+        $headers = array(
+            'Content-Type' => 'application/json'
+        );
+
+        // Request data
+        $data = array(
+            'client' => array(
+                'clientId' => self::CLIENT,
+                'clientVersion' => self::APP_VER
+            ),
+            'threatInfo' => array(
+                'threatTypes' => array('MALWARE', 'SOCIAL_ENGINEERING', 'POTENTIALLY_HARMFUL_APPLICATION', 'UNWANTED_SOFTWARE'),
+                'platformTypes' => array('ANY_PLATFORM'),
+                'threatEntryTypes' => array('URL'),
+                'threatEntries' => array(
+                    array(
+                        'url' => $this->url
+                    )
+                )
+            )
         );
         
         // Request options ?
         $options = array(
         );
         
-        return yourls_http_get( $api_url, array(), array(), $options );
+        return yourls_http_post( $api_url, $headers, json_encode($data), $options );
         
     }
 

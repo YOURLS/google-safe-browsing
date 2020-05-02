@@ -3,7 +3,7 @@
 Plugin Name: Google Safe Browsing
 Plugin URI: https://github.com/yourls/google-safe-browsing/
 Description: Check new links against Google's Safe Browsing service
-Version: 1.0
+Version: 1.1
 Author: Ozh
 Author URI: http://ozh.org/
 */

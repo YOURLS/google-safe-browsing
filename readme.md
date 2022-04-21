@@ -1,10 +1,10 @@
-Plugin for YOURLS 1.7+: Google Safe Browsing
+# Plugin for YOURLS : Google Safe Browsing [![Listed in Awesome YOURLS!](https://img.shields.io/badge/Awesome-YOURLS-C5A3BE)](https://github.com/YOURLS/awesome-yourls/)
 
-# What for
+## What for
 
 Check every new URL against Google's Safe Browsing Lookup service, reject those who are identified as malware or phishing
 
-# How to
+## How to
 
 * In `/user/plugins`, create a new folder named `google-safe-browsing`
 * Drop these files in that directory
@@ -12,7 +12,7 @@ Check every new URL against Google's Safe Browsing Lookup service, reject those 
 * Follow on-screen instructions
 * Have fun
 
-# Disclaimer
+## Disclaimer
 
 Using this plugin requires you to understand Google's Safe Browsing TOS. In short:
 * you need a Google account

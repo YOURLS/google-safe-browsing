@@ -1,4 +1,4 @@
-# Plugin for YOURLS : Google Safe Browsing [![Listed in Awesome YOURLS!](https://img.shields.io/badge/Awesome-YOURLS-C5A3BE)](https://github.com/YOURLS/awesome-yourls/)
+# Plugin for YOURLS: Google Safe Browsing [![Listed in Awesome YOURLS!](https://img.shields.io/badge/Awesome-YOURLS-C5A3BE)](https://github.com/YOURLS/awesome-yourls/) [![Tests](https://github.com/YOURLS/google-safe-browsing/actions/workflows/tests.yml/badge.svg)](https://github.com/YOURLS/google-safe-browsing/actions/workflows/tests.yml)
 
 ## What for
 

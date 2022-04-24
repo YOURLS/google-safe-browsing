@@ -1,0 +1,42 @@
+name: Check if new YOURLS release
+
+on:
+  # Run every Monday
+  schedule:
+    - cron:  '37 13 * * 1'
+  # Also allow manually triggering the workflow.
+  workflow_dispatch:
+
+jobs:
+  get-version:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Fetch release version
+        run: |
+          curl -sL https://api.github.com/repos/yourls/yourls/releases/latest | \
+          jq -r ".tag_name" > .github/.latest-yourls-release
+
+      - name: Commit and push if change
+        id: commit-if-new
+        run: |
+          git diff
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add -A
+          git commit -m "New YOURLS release" && echo "::set-output name=NEWVERSION::new"
+          git push
+
+      - name: Create Issue on new release
+        if: steps.commit-if-new.outputs.NEWVERSION == 'new'
+        uses: mrdoodles/open-issue@v1.0.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: New YOURLS release !
+          body: |
+            There is a new YOURLS release available: https://github.com/YOURLS/YOURLS/releases
+
+            Please check if your plugin is compatible with this release !

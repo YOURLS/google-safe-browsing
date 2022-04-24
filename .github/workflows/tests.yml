@@ -52,4 +52,6 @@ jobs:
           ls -la
 
       - name: Run the tests
+        env: # Or as an environment variable
+          API_KEY: ${{ secrets.API_KEY }}
         run: phpunit -c ./test-suite/src/phpunit.xml

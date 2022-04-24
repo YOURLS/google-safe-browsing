@@ -14,9 +14,9 @@ Check every new URL against Google's Safe Browsing Lookup service, reject those 
 
 ## Disclaimer
 
-Using this plugin requires you to understand Google's Safe Browsing TOS. In short:
-* you need a Google account
-* you are limited to a certain amount of queries per day (10,000 as of writing this)
+Using this plugin requires you to understand Google Safe Browsing usage. In short:
+* you need a Google account, to create project, create and activate a Google API key - not a 30 second task,
+* you are limited to a certain amount of queries per day,
 * you must understand that the service is not perfect.
 
-[Read more](https://developers.google.com/safe-browsing/lookup_guide#AcceptableUsage)
+[Read more](https://developers.google.com/safe-browsing/v4/get-started)

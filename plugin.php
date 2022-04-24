@@ -3,7 +3,7 @@
 Plugin Name: Google Safe Browsing
 Plugin URI: https://github.com/yourls/google-safe-browsing/
 Description: Check new links against Google's Safe Browsing service
-Version: 1.1
+Version: 1.2
 Author: Ozh
 Author URI: http://ozh.org/
 */
@@ -25,9 +25,9 @@ yourls_add_filter( 'shunt_add_new_link', 'ozh_yourls_gsb_check_add' );
  * @return mixed false if nothing to do, anything else will interrupt the flow of events
  */
 function ozh_yourls_gsb_check_add( $false, $url ) {
-    
+
     list( $blacklisted, $desc ) = ozh_yourls_gsb_is_blacklisted( $url );
-    
+
     // If blacklisted, halt here
 	if ( $blacklisted ) {
 		return array(
@@ -37,13 +37,13 @@ function ozh_yourls_gsb_check_add( $false, $url ) {
 			'errorCode' => '403',
 		);
 	}
-    
+
     // If not blacklisted but still unsure (error message), we should warn the user
     if( $desc ) {
         define( 'OZH_YOURLS_GSB_EXTRA_INFO', $desc );
         yourls_add_filter( 'add_new_link', 'ozh_yourls_gsb_extra_info' );
     }
-	
+
 	// All clear, don't interrupt the normal flow of events
 	return $false;
 }
@@ -55,7 +55,6 @@ yourls_add_action( 'plugins_loaded', 'ozh_yourls_gsb_add_page' );
  */
 function ozh_yourls_gsb_add_page() {
 	yourls_register_plugin_page( 'ozh_yourls_gsb', 'Google Safe Browsing', 'ozh_yourls_gsb_admin_page' );
-    
     if( ! yourls_get_option( 'ozh_yourls_gsb' ) ) {
         ozh_yourls_gsb_please_configure();
     }
@@ -81,15 +80,15 @@ function ozh_yourls_gsb_extra_info( $return ) {
  */
 function ozh_yourls_gsb_is_blacklisted( $url ) {
     include_once dirname( __FILE__ ) . '/includes/class-gsb.php';
-    
+
     $api_key = yourls_get_option( 'ozh_yourls_gsb' );
     if( !$api_key ) {
         ozh_yourls_gsb_please_configure();
-        return false;
+        return 'no api key';
     }
-    
+
     $gsb = new ozh_yourls_GSB( $api_key );
-    
+
     return $gsb->is_blacklisted( $url );
 }
 
@@ -109,4 +108,3 @@ function ozh_yourls_gsb_admin_page() {
 function ozh_yourls_gsb_please_configure() {
     yourls_add_notice( 'Plugin <strong>Google Safe Browsing</strong> is not configured' );
 }
-
